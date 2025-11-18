@@ -17,6 +17,31 @@ import { AlertCircle, Database, Loader2 } from "lucide-react";
 
 const EXAMPLE_WEBHOOK_URL = "https://n8n.example.com/webhook/incidents";
 
+const EXAMPLE_DATA: Incident[] = [
+  {
+    id: 1,
+    area: "Producción",
+    tipo_problema: "Paro máquina",
+    tiempo_paro_min: 45,
+    descripcion: "Paro en línea 1 por falla en banda transportadora",
+    criticidad: "Alta",
+    categoria_causa: "Máquina",
+    accion_rapida:
+      "Acción rápida: Revisar y reemplazar banda o rodillos dañados; reanudar línea tras prueba funcional.",
+  },
+  {
+    id: 3,
+    area: "Logística",
+    tipo_problema: "Falta de material",
+    tiempo_paro_min: 60,
+    descripcion: "Orden detenida por falta de tarimas en área de embarque",
+    criticidad: "Alta",
+    categoria_causa: "Materiales",
+    accion_rapida:
+      "Traer tarimas del almacén alterno y asignar responsable para reposición inmediata.",
+  },
+];
+
 export default function Home() {
   const [webhookUrl, setWebhookUrl] = useState("");
   const [incidents, setIncidents] = useState<Incident[]>([]);
@@ -65,6 +90,10 @@ export default function Home() {
 
   const handleUseExample = () => {
     setWebhookUrl(EXAMPLE_WEBHOOK_URL);
+    setIncidents(EXAMPLE_DATA);
+    setCriticalityFilter("Todos");
+    setAreaFilter("Todas");
+    setError(null);
   };
 
   // Get unique areas from incidents

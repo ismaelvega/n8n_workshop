@@ -47,7 +47,7 @@ export function IncidentCard({ incident }: IncidentCardProps) {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 ring-1 ring-inset ring-slate-500/10">
-                {incident.area}
+                {incident.area || "Área no especificada"}
               </span>
               {incident.fecha && (
                 <span className="text-xs text-slate-400 flex items-center gap-1">
@@ -57,7 +57,7 @@ export function IncidentCard({ incident }: IncidentCardProps) {
               )}
             </div>
             <h3 className="font-bold text-xl text-slate-900 dark:text-slate-100 leading-tight">
-              {incident.tipo_problema}
+              {incident.tipo_problema || "Problema sin identificar"}
             </h3>
           </div>
           <Badge
@@ -66,7 +66,7 @@ export function IncidentCard({ incident }: IncidentCardProps) {
               incident.criticidad
             )} px-3 py-1 text-sm font-bold uppercase tracking-wide shadow-sm`}
           >
-            {incident.criticidad}
+            {incident.criticidad || "N/A"}
           </Badge>
         </div>
       </CardHeader>
@@ -75,47 +75,43 @@ export function IncidentCard({ incident }: IncidentCardProps) {
         <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
           <AlertCircle className="w-4 h-4 text-slate-500" />
           <span>Tiempo de paro:</span>
-          <span className="font-bold">{incident.tiempo_paro_min} min</span>
+          <span className="font-bold">{incident.tiempo_paro_min ?? 0} min</span>
         </div>
 
         <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-          {incident.descripcion}
+          {incident.descripcion || "Sin descripción disponible."}
         </p>
 
         <div className="grid gap-3 pt-2">
-          {incident.categoria_causa && (
-            <div className="flex gap-3 items-start">
-              <div className="mt-1 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-md">
-                <Wrench className="w-3.5 h-3.5 text-slate-500" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Causa Probable
-                </p>
-                <p className="text-sm font-medium text-slate-900 dark:text-slate-200">
-                  {incident.categoria_causa}
-                </p>
-              </div>
+          <div className="flex gap-3 items-start">
+            <div className="mt-1 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-md">
+              <Wrench className="w-3.5 h-3.5 text-slate-500" />
             </div>
-          )}
+            <div>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                Causa Probable
+              </p>
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-200">
+                {incident.categoria_causa || "Pendiente de análisis"}
+              </p>
+            </div>
+          </div>
 
-          {incident.accion_rapida && (
-            <div className="group/action relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-100 dark:border-blue-900 p-4 transition-colors hover:border-blue-200 dark:hover:border-blue-800">
-              <div className="flex gap-3">
-                <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/50 p-1.5 rounded-full text-blue-600 dark:text-blue-400">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wider">
-                    Acción Recomendada
-                  </p>
-                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                    {incident.accion_rapida}
-                  </p>
-                </div>
+          <div className="group/action relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-100 dark:border-blue-900 p-4 transition-colors hover:border-blue-200 dark:hover:border-blue-800">
+            <div className="flex gap-3">
+              <div className="mt-0.5 bg-blue-100 dark:bg-blue-900/50 p-1.5 rounded-full text-blue-600 dark:text-blue-400">
+                <ArrowRight className="w-4 h-4" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wider">
+                  Acción Recomendada
+                </p>
+                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                  {incident.accion_rapida || "Esperar instrucciones del supervisor."}
+                </p>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </CardContent>
     </Card>
